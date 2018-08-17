@@ -95,17 +95,19 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
                                         <label for="txtBookId">Book ID</label>                                    
-                                        <input type ="text" name ="txtBookId" class="form-control mb-3" value="<%= (String) request.getAttribute("bookid")%>" readonly/>
+                                        <input type ="text" name ="txtBookId" class="form-control" value="<%= (String) request.getAttribute("bookid")%>" readonly/>
                                     </div>
-                                    <div class="form-group col-md-5">
+
+                                    <div class="form-group has-success col-md-5">
                                         <label for="txtTitle">Book Title</label>
-                                        <input type ="text" name ="txtTitle" class="form-control mb-3" placeholder="Title"/>
-                                        <p id="messageTitle"></p>
+                                        <input type ="text" name ="txtTitle" id="txtTitle" class="form-control" placeholder="Title"/>
+                                        <div class="invalid-feedback" id="messageTitle"></div>                                        
                                     </div>
+
                                     <div class="form-group col-md-4">
                                         <label  for="txtAuthor">Author :</label>
-                                        <input type ="text" name ="txtAuthor" class="form-control mb-3" placeholder="Author"/>
-                                        <p id="messageAuthor"></p>
+                                        <input type ="text" name ="txtAuthor" id="txtAuthor" class="form-control" placeholder="Author"/>
+                                        <div class="invalid-feedback" id="messageAuthor"></div>
                                     </div> 
                                 </div>  
                                 <div class="form-row">
@@ -123,7 +125,7 @@
                                     </div>
                                     <div class="form-group col-md-4">    
                                         <label  for="txtIsbn">ISBN No</label>
-                                        <input type ="text" name ="txtIsbn" class="form-control mb-3" placeholder="Isbn No"/>
+                                        <input type ="text" name ="txtIsbn" id="txtIsbn" class="form-control mb-3" placeholder="Isbn No" maxlength="13"/>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -199,52 +201,60 @@
                 });
             });
         });
-
+//        $('#txtIsbn').keyup(function () {
+//            $(this).val($(this).val().replace(/(\d{3})\-?(\d{1})\-?(\d{3})\-?(\d{5})\-?(\d{1})/, 'ISBN $1-$2-$3-$4-$5'));
+//        });
         function validateForm() {
-            var title = document.forms["addBookForm"]["txtTitle"].value;
             var author = document.forms["addBookForm"]["txtAuthor"].value;
             var main = document.forms["addBookForm"]["txtMain"].value;
             var sub = document.forms["addBookForm"]["txtSub"].value;
             var isbn = document.forms["addBookForm"]["txtIsbn"].value;
             var nop = document.forms["addBookForm"]["txtPages"].value;
             var pubishedYear = document.forms["addBookForm"]["publishedYear"].value;
-            var printedYear = document.forms["addBookForm"]["printedYear"].value;            
-            
+            var printedYear = document.forms["addBookForm"]["printedYear"].value;
+
+            var title = document.forms["addBookForm"]["txtTitle"].value;
+            var msgTitle;
             if (title == "") {
-                var msgTitle = "Please enter the book name.";
+                msgTitle = "Please enter the book name.";
+                document.getElementById('txtTitle').classList.add('is-invalid');
                 document.getElementById("messageTitle").innerHTML = msgTitle;
-                return false;
+            } else {
+                document.getElementById('txtTitle').classList.remove('is-invalid');
+                document.getElementById("messageTitle").innerHTML = "";
             }
             if (author == "") {
                 var msgAuthor = "Please enter author name.";
+                document.getElementById('txtAuthor').classList.add('is-invalid');
                 document.getElementById("messageAuthor").innerHTML = msgAuthor;
+            } else {
+                document.getElementById("messageAuthor").innerHTML = "";
+            }
+            if (main == "") {
+                msg = "Please select a main classification.";
                 return false;
             }
-//            if (main == "") {
-//                msg = "Please select a main classification.";
-//                return false;
-//            }
-//            if (sub == "") {
-//                msg = "Please select a sub classification.";
-//                return false;
-//            }
-//            if (isbn == "") {
-//                msg = "Please enter the isbn no.";
-//                return false;
-//            }
-//            if (nop == "") {
-//                msg = "Please enter the no of pages.";
-//                return false;
-//            }
-//            if (pubishedYear == "") {
-//                msg = "Please select the published year.";
-//                return false;
-//            }
-//            if (printedYear == "") {
-//                msg = "Please select the printed year.";
-//                return false;
-//            }
-            
+            if (sub == "") {
+                msg = "Please select a sub classification.";
+                return false;
+            }
+            if (isbn == "") {
+                msg = "Please enter the isbn no.";
+                return false;
+            }
+            if (nop == "") {
+                msg = "Please enter the no of pages.";
+                return false;
+            }
+            if (pubishedYear == "") {
+                msg = "Please select the published year.";
+                return false;
+            }
+            if (printedYear == "") {
+                msg = "Please select the printed year.";
+                return false;
+            }
+
         }
     </script>
 </html>
