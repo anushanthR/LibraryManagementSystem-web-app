@@ -9,10 +9,7 @@ import com.sgc.data.SubClassificationDao;
 import com.sgc.model.Classification;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -71,15 +68,10 @@ public class SearchSubController extends HttpServlet {
         String txtSearchKey = request.getParameter("txtSearchKey");
         
         
-        try {
-            result = subDao.searchSub(txtSearchKey);
-            request.setAttribute("result", result);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewSubClassification.jsp");
-
-            dispatcher.forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ViewSubController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        result = subDao.searchSub(txtSearchKey);
+        request.setAttribute("result", result);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewSubClassification.jsp");
+        dispatcher.forward(request, response);
     }
 
     /**

@@ -5,14 +5,10 @@
  */
 package com.sgc.controller;
 
-import com.sgc.data.MainClassificationDao;
 import com.sgc.data.SubClassificationDao;
 import com.sgc.model.Classification;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -71,16 +67,11 @@ public class AddSubController extends HttpServlet {
         sub.setSubId(request.getParameter("txtSubId"));
         sub.setMainId(request.getParameter("txtMainId"));
         sub.setSubClass(request.getParameter("txtSubClass"));
-        try {
-            subDao.insertSub(sub);
-            String success = "Classification "+sub.getSubClass()+" has added successfully";
-            request.setAttribute("Success", success);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("ViewSubController");
-            dispatcher.forward(request, response);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(AddBookController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        subDao.insertSub(sub);
+        String success = "Classification "+sub.getSubClass()+" has added successfully";
+        request.setAttribute("Success", success);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("ViewSubController");
+        dispatcher.forward(request, response);
     }
 
     /**

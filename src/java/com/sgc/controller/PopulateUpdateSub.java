@@ -9,9 +9,6 @@ import com.sgc.data.SubClassificationDao;
 import com.sgc.model.Classification;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -70,14 +67,10 @@ public class PopulateUpdateSub extends HttpServlet {
 
         if (null != request.getParameter("updateSub")) {
             txtSearchKey = request.getParameter("updateSub");
-            try {
-                result = dao.populateSub(txtSearchKey);
-                request.setAttribute("result", result);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/UpdateSubClassification.jsp");
-                dispatcher.forward(request, response);
-            } catch (SQLException ex) {
-                Logger.getLogger(PopulateUpdateMain.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            result = dao.populateSub(txtSearchKey);
+            request.setAttribute("result", result);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/UpdateSubClassification.jsp");
+            dispatcher.forward(request, response);
         }
     }
 
