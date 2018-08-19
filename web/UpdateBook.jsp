@@ -55,41 +55,41 @@
 
     </head>
     <body>
-
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
-            <a class="navbar-brand" href="index.jsp"><img src="Content/ICONS/image.png" width="35" height="35"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <div class="btn-group">
-                            <a class="btn btn-outline-light" href="ViewSubController">Classification</a>
-                            <a class="btn btn-outline-light dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li class="dropdown-item"><a class="dropdown-item" href="AddMainClassification.jsp">Add Main classification</a>
-                                </li>
-                                <li class="dropdown-item"><a class="dropdown-item" href="AddSubClassification.jsp">Add Sub Classification</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="navbar-nav m1-auto">
-                    <form class="form-inline my-2 my-lg-0" action="ViewBookController">
-                        <input class="form-control mr-sm-2" name="txtSearchKey" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-                    </form>
-                    <li class="nav-item active">
-                        <a class="btn btn-outline-light" href="ViewBookController">View All Book<span class="sr-only">(current)</span></a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
         <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
+                <a class="navbar-brand" href="index.jsp"><img src="Content/ICONS/image.png" width="35" height="35"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <div class="btn-group">
+                                <a class="btn btn-outline-light" href="ViewSubController">Classification</a>
+                                <a class="btn btn-outline-light dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <li class="dropdown-item"><a class="dropdown-item" href="AddMainClassification.jsp">Add Main classification</a>
+                                    </li>
+                                    <li class="dropdown-item"><a class="dropdown-item" href="AddSubClassification.jsp">Add Sub Classification</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav m1-auto">
+                        <form class="form-inline my-2 my-lg-0" action="ViewBookController">
+                            <input class="form-control mr-sm-2" name="txtSearchKey" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                        <li class="nav-item active">
+                            <a class="btn btn-outline-light" href="ViewBookController">View All Book<span class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
             <div class="row">
                 <div class="col col-md-8 offset-2">
 
@@ -99,19 +99,19 @@
                             <% if (request.getAttribute("result") != null) {
                                     Book b = (Book) request.getAttribute("result");
                             %>
-                            <form  action="UpdateBookController" Method ="get">
+                            <form name="editBookForm" id="editBookForm" action="UpdateBookController" onsubmit="return validateForm()" Method ="get">
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
                                         <label for="txtMCID">Book ID</label>                                    
-                                        <input type ="text" name ="txtBookId" class="form-control mb-3" value="<%= b.getId()%>" readonly/>
+                                        <input type ="text" name ="txtBookId" id="txtBookId" class="form-control mb-3" value="<%= b.getId()%>" readonly/>
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label for="txtTitle">Book Title</label>
-                                        <input type ="text" name ="txtTitle" class="form-control mb-3" value="<%= b.getTitle()%>"/>
+                                        <input type ="text" name ="txtTitle" id="txtTitle" class="form-control mb-3" value="<%= b.getTitle()%>"/>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label  for="txtAuthor">Author :</label>
-                                        <input type ="text" name ="txtAuthor" class="form-control mb-3" value="<%= b.getAuthor()%>"/>            
+                                        <input type ="text" name ="txtAuthor" id="txtAuthor" class="form-control mb-3" value="<%= b.getAuthor()%>"/>            
                                     </div> 
                                 </div>  
                                 <div class="form-row">
@@ -129,7 +129,7 @@
                                     </div>
                                     <div class="form-group col-md-4">    
                                         <label  for="txtIsbn">ISBN No</label>
-                                        <input type ="text" name ="txtIsbn" class="form-control mb-3" value="<%= b.getIsbn()%>"/>
+                                        <input type ="text" name ="txtIsbn" id="txtIsbn" class="form-control mb-3" value="<%= b.getIsbn()%>"/>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -147,11 +147,11 @@
                                     </div>
                                     <div class="form-group col-md-4">    
                                         <label for="txtPages">No of pages</label>
-                                        <input type ="text" name ="txtPages" class="form-control mb-3" value="<%= b.getPages()%>"/>
+                                        <input type ="text" name ="txtPages" id="txtPages" class="form-control mb-3" value="<%= b.getPages()%>"/>
                                     </div>
                                 </div>
                                 <button type ="Submit" class="btn btn-primary float-right">SUBMIT</button>
-                            </form>                            
+                            </form>
                         </div>
                     </div>
                 </div>                
@@ -186,7 +186,7 @@
             }
             $('#printedYear').val("<%= b.getPrintedYear()%>");
         }
-
+        
         function loadPrintedYear() {
             document.getElementById("printedYear").options.length = 0;
 
@@ -199,7 +199,7 @@
                 theOption.text = i;
                 theOption.value = i;
                 lpy.options[cYear - i] = theOption;
-            }
+            }            
         }
         window.onload = loadPublishedYear();
         window.onload = selectPrintedYear();
@@ -212,7 +212,7 @@
                 });
                 $('#txtMain').val("<%= b.getMain()%>");
             });
-
+        
             var txtMain = "<%= b.getMain()%>";
             $.get("LoadSubController", {txtMain: txtMain}, function (responseJson) {
                 var $select = $("#txtSub");
@@ -234,6 +234,106 @@
                 });
             });
         });
+        
+        function validateForm() {
+            var title = document.forms["editBookForm"]["txtTitle"].value;
+            var msgTitle;
+            if (title == null || title == "") {
+                msgTitle = "Please enter the book name.";
+                document.getElementById('txtTitle').classList.add('is-invalid');
+                document.getElementById("messageTitle").innerHTML = msgTitle;
+            } else {
+                document.getElementById('txtTitle').classList.remove('is-invalid');
+                document.getElementById("messageTitle").innerHTML = "";
+            }
+
+            var author = document.forms["editBookForm"]["txtAuthor"].value;
+            var msgAuthor;
+            if (author == null || author == "") {
+                msgAuthor = "Please enter author name.";
+                document.getElementById('txtAuthor').classList.add('is-invalid');
+                document.getElementById("messageAuthor").innerHTML = msgAuthor;
+
+            } else {
+                document.getElementById('txtAuthor').classList.remove('is-invalid');
+                document.getElementById("messageAuthor").innerHTML = "";
+            }
+
+            var isbn = document.forms["editBookForm"]["txtIsbn"].value;
+            var msgIsbn;
+            if (isbn == null || isbn == "") {
+                msgIsbn = "Please enter isbn no.";
+                document.getElementById('txtIsbn').classList.add('is-invalid');
+                document.getElementById("messageIsbn").innerHTML = msgIsbn;
+
+            } else {
+                document.getElementById('txtIsbn').classList.remove('is-invalid');
+                document.getElementById("messageIsbn").innerHTML = "";
+            }
+
+            var sctMain = document.getElementById("txtMain");
+            var vMain = sctMain.options[sctMain.selectedIndex].value;
+            var msgMain;
+            if (vMain == null || vMain == "") {
+                msgMain = "Please select main classification.";
+                document.getElementById('txtMain').classList.add('is-invalid');
+                document.getElementById("messageMain").innerHTML = msgMain;
+
+            } else {
+                document.getElementById('txtMain').classList.remove('is-invalid');
+                document.getElementById("messageMian").innerHTML = "";
+            }
+            var sctSub = document.getElementById("txtSub");
+            var vSub = sctMain.options[sctSub.selectedIndex].value;            
+            var msgSub;
+            if (vSub == null || vSub == "") {
+                msgSub = "Please select sub classification.";
+                document.getElementById('txtSub').classList.add('is-invalid');
+                document.getElementById("messageSub").innerHTML = msgSub;
+
+            } else {
+                document.getElementById('txtSub').classList.remove('is-invalid');
+                document.getElementById("messageSub").innerHTML = "";
+            }
+
+            var pubishedYear = document.forms["editBookForm"]["publishedYear"].value;
+            var msgPublishedYear;
+            if (pubishedYear == null || pubishedYear == "") {
+                msgPublishedYear = "Please select published year.";
+                document.getElementById('publishedYear').classList.add('is-invalid');
+                document.getElementById("messagePublishedYear").innerHTML = msgPublishedYear;
+            } else {
+                document.getElementById('publishedYear').classList.remove('is-invalid');
+                document.getElementById("messagePublishedYear").innerHTML = "";
+            }
+
+            var printedYear = document.forms["editBookForm"]["printedYear"].value;
+            var msgPrintedYear;
+            if (printedYear == null || printedYear == "") {
+                msgPrintedYear = "Please select printed year.";
+                document.getElementById('printedYear').classList.add('is-invalid');
+                document.getElementById("messagePrintedYear").innerHTML = msgPrintedYear;
+
+            } else {
+                document.getElementById('printedYear').classList.remove('is-invalid');
+                document.getElementById("messagePrintedYear").innerHTML = "";
+            }
+
+            var nop = document.forms["editBookForm"]["txtPages"].value;
+            var msgPages;
+            if (nop == null || nop == "") {
+                msgPages = "Please enter No of pages.";
+                document.getElementById('txtPages').classList.add('is-invalid');
+                document.getElementById("messagePages").innerHTML = msgPages;
+                return false;
+            } else {
+                document.getElementById('txtPages').classList.remove('is-invalid');
+                document.getElementById("messagePages").innerHTML = "";
+            }
+            if ((printedYear == null || printedYear == "") || (pubishedYear == null || pubishedYear == "") || (nop == null || nop == "") || (isbn == null || isbn == "") || (title == null || title == "") || (author == null || author == "") || (vSub == null || vSub == "") || (vMain == null || vMain == "")) {
+                return false;
+            }
+        }
     </script>
     <%}%>
 </html>
