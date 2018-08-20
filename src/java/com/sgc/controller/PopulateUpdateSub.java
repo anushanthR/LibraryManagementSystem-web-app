@@ -61,17 +61,7 @@ public class PopulateUpdateSub extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String txtSearchKey;
-        Classification result;
-        SubClassificationDao dao = new SubClassificationDao();
-
-        if (null != request.getParameter("updateSub")) {
-            txtSearchKey = request.getParameter("updateSub");
-            result = dao.populateSub(txtSearchKey);
-            request.setAttribute("result", result);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/UpdateSubClassification.jsp");
-            dispatcher.forward(request, response);
-        }
+        
     }
 
     /**
@@ -85,7 +75,17 @@ public class PopulateUpdateSub extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String txtSearchKey;
+        Classification result;
+        SubClassificationDao dao = new SubClassificationDao();
+
+        if (null != request.getParameter("updateSub")) {
+            txtSearchKey = request.getParameter("updateSub");
+            result = dao.populateSub(txtSearchKey);
+            request.setAttribute("result", result);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/UpdateSubClassification.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     /**

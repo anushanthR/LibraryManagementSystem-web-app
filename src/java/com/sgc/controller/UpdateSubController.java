@@ -61,19 +61,7 @@ public class UpdateSubController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Classification sub = new Classification();
-        SubClassificationDao sDao = new SubClassificationDao();
-        
-        sub.setSubId(request.getParameter("txtSubId"));
-        sub.setSubClass(request.getParameter("txtSubClass"));
-        sub.setMainId(request.getParameter("txtMainId"));
-        
-        sDao.updateSub(sub);
-        String msg = "Classification "+sub.getSubClass()+" has Updated successfully";
-        request.setAttribute("msg", msg);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ViewSubController");
-        dispatcher.forward(request, response);
-        
+               
     }
 
     /**
@@ -87,7 +75,18 @@ public class UpdateSubController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Classification sub = new Classification();
+        SubClassificationDao sDao = new SubClassificationDao();
+        
+        sub.setSubId(request.getParameter("txtSubId"));
+        sub.setSubClass(request.getParameter("txtSubClass"));
+        sub.setMainId(request.getParameter("txtMainId"));
+        
+        sDao.updateSub(sub);
+        String msg = "Classification "+sub.getSubClass()+" has Updated successfully";
+        request.setAttribute("msg", msg);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("ViewSubController");
+        dispatcher.forward(request, response);
     }
 
     /**

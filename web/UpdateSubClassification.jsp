@@ -100,7 +100,7 @@
                     <div class="card">
                         <div class="card-header"><b><center>EDIT SUB CLASSIFICATION</center></b></div>
                         <div class="card-body">
-                            <form action="UpdateSubController" method="get">
+                            <form name="editSubForm" id="editSubForm" action="UpdateSubController" method="POST" onsubmit="return validateForm();">
                                 <div class="form-row">
                                     <div class="form-group col-md-12">                       
                                         <Label for="txtsubId">ID</label>
@@ -118,14 +118,13 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <Label for="txtsubId">Sub Classification</label>
-                                        <input type ="text" name ="txtSubClass" class="form-control mb-3" value="<%= c.getSubClass()%>"/>
+                                        <input type ="text" name ="txtSubClass" id="txtSubClass" class="form-control mb-3" value="<%= c.getSubClass()%>"/>
                                     </div>
                                 </div>
                                 <button type ="Submit" class="btn btn-primary float-right">SUBMIT</button>                        
                             </form>
                         </div>
                     </div>
-
                 </div>                
             </div>
         </div>
@@ -140,6 +139,27 @@
                 $("#txtMain").val("<%= c.getMainId()%>");
             });
         });
+        
+        function validateForm() {
+            var vMain = document.forms["editSubForm"]["txtMain"].value;
+            if (vMain == null || vMain == "") {
+                document.getElementById('txtMain').classList.add('is-invalid');
+            } else {
+                document.getElementById('txtMain').classList.remove('is-invalid');
+            }
+
+            var vSub = document.forms["editSubForm"]["txtSubClass"].value;
+            if (vSub == null || vSub == "") {
+                document.getElementById('txtSubClass').classList.add('is-invalid');
+            } else {
+                document.getElementById('txtSubClass').classList.remove('is-invalid');
+            }
+
+            if ((vMain == null || vMain == "") ||
+                    (vSub == null || vSub == "")) {
+                return false;
+            }
+        }
     </script>
     <%}%>
 </html>

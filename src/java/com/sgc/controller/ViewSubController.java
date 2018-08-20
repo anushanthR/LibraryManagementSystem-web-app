@@ -35,19 +35,17 @@ public class ViewSubController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ViewSubController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ViewSubController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+       String msg = null;
+        if(request.getAttribute("msg")!=null){
+            msg = (String)request.getAttribute("msg");
         }
+        List<Classification> result;
+        SubClassificationDao subDao = new SubClassificationDao();
+        result = subDao.viewSub();
+        request.setAttribute("msg", msg);
+        request.setAttribute("result", result);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewSubClassification.jsp");
+        dispatcher.forward(request, response);        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -62,19 +60,8 @@ public class ViewSubController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String msg = null;
-        if(request.getAttribute("msg")!=null){
-            msg = (String)request.getAttribute("msg");
-        }
-        List<Classification> result;
-        SubClassificationDao subDao = new SubClassificationDao();
-        result = subDao.viewSub();
-        request.setAttribute("msg", msg);
-        request.setAttribute("result", result);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewSubClassification.jsp");
-        dispatcher.forward(request, response);        
+        processRequest(request, response);
     }
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *

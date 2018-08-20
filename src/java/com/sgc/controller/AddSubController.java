@@ -61,17 +61,7 @@ public class AddSubController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Classification sub = new Classification();
-        SubClassificationDao subDao = new SubClassificationDao();
         
-        sub.setSubId(request.getParameter("txtSubId"));
-        sub.setMainId(request.getParameter("txtMainId"));
-        sub.setSubClass(request.getParameter("txtSubClass"));
-        subDao.insertSub(sub);
-        String success = "Classification "+sub.getSubClass()+" has added successfully";
-        request.setAttribute("Success", success);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ViewSubController");
-        dispatcher.forward(request, response);
     }
 
     /**
@@ -85,7 +75,17 @@ public class AddSubController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Classification sub = new Classification();
+        SubClassificationDao subDao = new SubClassificationDao();
+        
+        sub.setSubId(request.getParameter("txtSubId"));
+        sub.setMainId(request.getParameter("txtMainId"));
+        sub.setSubClass(request.getParameter("txtSubClass"));
+        subDao.insertSub(sub);
+        String success = "Classification "+sub.getSubClass()+" has added successfully";
+        request.setAttribute("Success", success);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("ViewSubController");
+        dispatcher.forward(request, response);
     }
 
     /**

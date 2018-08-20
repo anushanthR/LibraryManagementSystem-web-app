@@ -16,11 +16,8 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 
         <script src="http://code.jquery.com/jquery-latest.js"></script>
-        <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-        <script type="text/javascript" language="javascript" src="Content/bootstrap-4.1.3-dist/js/jquery.tablesorter.min.js"></script>
         <style>
             .dropdown-submenu a::after {
                 transform: rotate(-90deg);
@@ -50,7 +47,6 @@
 
     </head>
     <body>
-
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
             <a class="navbar-brand" href="index.jsp"><img src="Content/ICONS/image.png" width="35" height="35"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +87,7 @@
                     <div class="card">
                         <div class="card-header"><b><center>ADD BOOK</center></b></div>
                         <div class="card-body">
-                            <form name="addBookForm" action="AddBookController" onsubmit="return validateForm()" Method ="get">
+                            <form name="addBookForm" action="AddBookController" onsubmit="return validateForm()" Method ="POST">
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
                                         <label for="txtBookId">Book ID</label>                                    
@@ -100,14 +96,12 @@
 
                                     <div class="form-group has-success col-md-5">
                                         <label for="txtTitle">Book Title</label>
-                                        <input type ="text" name ="txtTitle" id="txtTitle" class="form-control" placeholder="Title"/>
-                                        <div class="invalid-feedback" id="messageTitle"></div>                                        
+                                        <input type ="text" name ="txtTitle" id="txtTitle" class="form-control" placeholder="Title"/>                                                                                
                                     </div>
 
                                     <div class="form-group col-md-4">
                                         <label  for="txtAuthor">Author :</label>
-                                        <input type ="text" name ="txtAuthor" id="txtAuthor" class="form-control" placeholder="Author"/>
-                                        <div class="invalid-feedback" id="messageAuthor"></div>
+                                        <input type ="text" name ="txtAuthor" id="txtAuthor" class="form-control" placeholder="Author"/>                                        
                                     </div> 
                                 </div>  
                                 <div class="form-row">
@@ -115,20 +109,17 @@
                                         <label for="txtMain">Main Classification</label>
                                         <select name ="txtMain" id="txtMain" class="form-control custom-select">
                                             <option value="" selected disabled hidden>--Select-Main-Classification--</option>
-                                        </select>
-                                        <div class="invalid-feedback" id="messageMain"></div> 
+                                        </select>                                         
                                     </div>
                                     <div class="form-group col-md-4">    
                                         <label for="publishedYear">Published Year</label>
                                         <select name ="publishedYear" id="publishedYear" class="form-control custom-select" onChange="loadPrintedYear();">
                                             <option value="" selected disabled hidden>--Select-Published-Year--</option>
-                                        </select>
-                                        <div class="invalid-feedback" id="messagePublishedYear"></div> 
+                                        </select>                                         
                                     </div>
                                     <div class="form-group col-md-4">    
                                         <label  for="txtIsbn">ISBN No</label>
-                                        <input type ="text" name ="txtIsbn" id="txtIsbn" class="form-control" placeholder="Isbn No" maxlength="13"/>
-                                        <div class="invalid-feedback" id="messageIsbn"></div> 
+                                        <input type ="number" name ="txtIsbn" id="txtIsbn" class="form-control" placeholder="Isbn No" min="0" max="9999999999999"/>                                       
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -136,20 +127,17 @@
                                         <label for="txtSub">Sub Classification</label>
                                         <select name ="txtSub" id="txtSub" class="form-control custom-select">
                                             <option value="" selected disabled hidden>--Select-Sub-Classification--</option>
-                                        </select>
-                                        <div class="invalid-feedback" id="messageSub"></div> 
+                                        </select> 
                                     </div>
                                     <div class="form-group col-md-4">    
                                         <label for="printedYear">Last Printed Year</label>
                                         <select name ="printedYear" id="printedYear" class="form-control custom-select">
                                             <option value="" selected disabled hidden>--Select-Last-Printed-Year--</option>
                                         </select>
-                                        <div class="invalid-feedback" id="messagePrintedYear"></div> 
                                     </div>
                                     <div class="form-group col-md-4">    
                                         <label for="txtPages">No of pages</label>
-                                        <input type ="text" name ="txtPages" id="txtPages" class="form-control" placeholder="No Of Pages"/>
-                                        <div class="invalid-feedback" id="messagePages"></div> 
+                                        <input type ="number" name ="txtPages" id="txtPages" class="form-control" placeholder="No Of Pages"  min="0" max="9999"/>
                                     </div>
                                 </div>
                                 <button type ="Submit" class="btn btn-primary float-right">SUBMIT</button>
@@ -161,6 +149,9 @@
         </div>        
     </body>
     <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
         function loadPublishedYear()
         {
             var fpy = document.getElementById('publishedYear');
@@ -212,100 +203,67 @@
 //        });
         function validateForm() {
             var title = document.forms["addBookForm"]["txtTitle"].value;
-            var msgTitle;
             if (title == null || title == "") {
-                msgTitle = "Please enter the book name.";
                 document.getElementById('txtTitle').classList.add('is-invalid');
-                document.getElementById("messageTitle").innerHTML = msgTitle;
             } else {
                 document.getElementById('txtTitle').classList.remove('is-invalid');
-                document.getElementById("messageTitle").innerHTML = "";
             }
 
             var author = document.forms["addBookForm"]["txtAuthor"].value;
-            var msgAuthor;
             if (author == null || author == "") {
-                msgAuthor = "Please enter author name.";
                 document.getElementById('txtAuthor').classList.add('is-invalid');
-                document.getElementById("messageAuthor").innerHTML = msgAuthor;
-
             } else {
                 document.getElementById('txtAuthor').classList.remove('is-invalid');
-                document.getElementById("messageAuthor").innerHTML = "";
             }
 
             var isbn = document.forms["addBookForm"]["txtIsbn"].value;
-            var msgIsbn;
             if (isbn == null || isbn == "") {
-                msgIsbn = "Please enter isbn no.";
                 document.getElementById('txtIsbn').classList.add('is-invalid');
-                document.getElementById("messageIsbn").innerHTML = msgIsbn;
-
             } else {
                 document.getElementById('txtIsbn').classList.remove('is-invalid');
-                document.getElementById("messageIsbn").innerHTML = "";
             }
 
-            var sctMain = document.getElementById("txtMain");
-            var vMain = sctMain.options[sctMain.selectedIndex].value;
-            var msgMain;
+            var vMain = document.forms["addBookForm"]["txtMain"].value;
             if (vMain == null || vMain == "") {
-                msgMain = "Please select main classification.";
                 document.getElementById('txtMain').classList.add('is-invalid');
-                document.getElementById("messageMain").innerHTML = msgMain;
-
             } else {
                 document.getElementById('txtMain').classList.remove('is-invalid');
-                document.getElementById("messageMian").innerHTML = "";
             }
-            var sctSub = document.getElementById("txtSub");
-            var vSub = sctMain.options[sctSub.selectedIndex].value;            
-            var msgSub;
-            if (vSub == null || vSub == "") {
-                msgSub = "Please select sub classification.";
-                document.getElementById('txtSub').classList.add('is-invalid');
-                document.getElementById("messageSub").innerHTML = msgSub;
 
+            var vSub = document.forms["addBookForm"]["txtSub"].value;
+            if (vSub == null || vSub == "") {
+                document.getElementById('txtSub').classList.add('is-invalid');
             } else {
                 document.getElementById('txtSub').classList.remove('is-invalid');
-                document.getElementById("messageSub").innerHTML = "";
             }
-
             var pubishedYear = document.forms["addBookForm"]["publishedYear"].value;
-            var msgPublishedYear;
             if (pubishedYear == null || pubishedYear == "") {
-                msgPublishedYear = "Please select published year.";
                 document.getElementById('publishedYear').classList.add('is-invalid');
-                document.getElementById("messagePublishedYear").innerHTML = msgPublishedYear;
             } else {
                 document.getElementById('publishedYear').classList.remove('is-invalid');
-                document.getElementById("messagePublishedYear").innerHTML = "";
             }
 
             var printedYear = document.forms["addBookForm"]["printedYear"].value;
-            var msgPrintedYear;
             if (printedYear == null || printedYear == "") {
-                msgPrintedYear = "Please select printed year.";
                 document.getElementById('printedYear').classList.add('is-invalid');
-                document.getElementById("messagePrintedYear").innerHTML = msgPrintedYear;
-
             } else {
                 document.getElementById('printedYear').classList.remove('is-invalid');
-                document.getElementById("messagePrintedYear").innerHTML = "";
             }
 
             var nop = document.forms["addBookForm"]["txtPages"].value;
-            var msgPages;
             if (nop == null || nop == "") {
-                msgPages = "Please enter No of pages.";
                 document.getElementById('txtPages').classList.add('is-invalid');
-                document.getElementById("messagePages").innerHTML = msgPages;
-                return false;
             } else {
                 document.getElementById('txtPages').classList.remove('is-invalid');
-                document.getElementById("messagePages").innerHTML = "";
             }
-            if ((printedYear == null || printedYear == "") || (pubishedYear == null || pubishedYear == "") || (nop == null || nop == "") || (isbn == null || isbn == "") || (title == null || title == "") || (author == null || author == "") || (vSub == null || vSub == "") || (vMain == null || vMain == "")) {
+            if ((printedYear == null || printedYear == "") ||
+                    (pubishedYear == null || pubishedYear == "") ||
+                    (nop == null || nop == "") ||
+                    (isbn == null || isbn == "") ||
+                    (title == null || title == "") ||
+                    (author == null || author == "") ||
+                    (vMain == null || vMain == "") ||
+                    (vSub == null || vSub == "")) {
                 return false;
             }
         }

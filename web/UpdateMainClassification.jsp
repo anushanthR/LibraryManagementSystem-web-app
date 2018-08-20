@@ -94,7 +94,7 @@
                     <div class="card">
                         <div class="card-header"><b><center>EDIT MAIN CLASSIFICATION</center></b></div>
                         <div class="card-body">
-                            <form action="UpdateMainController" method="get">
+                            <form name="editMainForm" id="editMainForm" action="UpdateMainController" method="POST" onsubmit="return validateForm()">
                                 <div class="form-row">
                                     <div class="form-group col-md-12">                       
                                         <Label for="txtMainId">ID</label>
@@ -104,7 +104,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <Label for="txtMainClass">Main Classification</label>
-                                        <input type ="text" name ="txtMainClass" class="form-control mb-3" value="<%= c.getMainClass()%>"/>
+                                        <input type ="text" name ="txtMainClass" id="txtMainClass" class="form-control mb-3" value="<%= c.getMainClass()%>"/>
                                     </div>
                                 </div>
                                 <button type ="Submit" class="btn btn-primary float-right">SUBMIT</button>                    
@@ -117,4 +117,15 @@
             </div>
         </div>
     </body>
+    <script>
+        function validateForm() {
+            var main = document.forms["editMainForm"]["txtMainClass"].value;
+            if (main == null || main == "") {
+                document.getElementById('txtMainClass').classList.add('is-invalid');
+                return false;
+            } else {
+                document.getElementById('txtMainClass').classList.remove('is-invalid');
+            }            
+        }
+    </script>
 </html>

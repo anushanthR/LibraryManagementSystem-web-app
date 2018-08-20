@@ -20,7 +20,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-        <script type="text/javascript" language="javascript" src="Content/bootstrap-4.1.3-dist/js/jquery.tablesorter.min.js"></script>
         <style>
             .dropdown-submenu {
                 position: relative;
@@ -91,17 +90,17 @@
                     <div class="card">
                         <div class="card-header"><b><center>ADD MAIN CLASSIFICATION</center></b></div>
                         <div class="card-body">
-                            <form action="AddMainController" method="get">
+                            <form name="addMainForm" id="addMainForm" action="AddMainController" method="POST" onsubmit="return validateForm();">
                                 <div class="form-row">
                                     <div class="form-group col-md-12">                       
                                         <Label for="txtMCID">ID</label>
-                                        <input type ="text" name ="txtMainId" class="form-control mb-3" value="<%= (String) request.getAttribute("mcid")%>" readonly/>
+                                        <input type ="text" name ="txtMainId" class="form-control" value="<%= (String) request.getAttribute("mcid")%>" readonly/>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <Label for="txtMCID">Classification</label>
-                                        <input type ="text" name ="txtMainClass" class="form-control mb-3" placeholder="Main Classification"/>
+                                        <input type ="text" name ="txtMainClass" id="txtMainClass" class="form-control" placeholder="Main Classification" />
                                     </div>
                                 </div>                                
                                 <button type ="Submit" class="btn btn-primary float-right">SUBMIT</button>                                
@@ -112,4 +111,15 @@
             </div>
         </div>
     </body>
+    <script>
+        function validateForm() {
+            var main = document.forms["addMainForm"]["txtMainClass"].value;
+            if (main == null || main == "") {
+                document.getElementById('txtMainClass').classList.add('is-invalid');
+                return false;
+            } else {
+                document.getElementById('txtMainClass').classList.remove('is-invalid');
+            }            
+        }
+    </script>
 </html>
