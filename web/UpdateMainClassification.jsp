@@ -54,40 +54,38 @@
 
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+            <a class="navbar-brand" href="index.jsp"><img src="Content/ICONS/image.png" width="35" height="35"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <div class="btn-group">
+                            <a class="btn btn-outline-light" href="ViewSubController">Classification</a>
+                            <a class="btn btn-outline-light dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">                                    
+                                <li class="dropdown-item"><a class="dropdown-item" href="SubIdAutoGenController">Add Sub Classification</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav m1-auto">
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                    <li class="nav-item active">
+                        <a class="btn btn-outline-light" href="LoadFirstController">View All Book<span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
         <div class="container-fluid">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
-                <a class="navbar-brand" href="index.jsp"><img src="Content/ICONS/image.png" width="35" height="35"></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item dropdown">
-                            <div class="btn-group">
-                                <a class="btn btn-outline-light" href="ViewSubController">Classification</a>
-                                <a class="btn btn-outline-light dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">                                    
-                                    <li class="dropdown-item"><a class="dropdown-item" href="SubIdAutoGenController">Add Sub Classification</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav m1-auto">
-                        <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-                        </form>
-                        <li class="nav-item active">
-                            <a class="btn btn-outline-light" href="LoadFirstController">View All Book<span class="sr-only">(current)</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
-
             <div class="row" style="padding-top: 50px;">                
                 <div class="col col-md-4 offset-4 mb-3">
                     <% if (request.getAttribute("result") != null) {
@@ -96,7 +94,7 @@
                     <div class="card">
                         <div class="card-header"><b><center>EDIT MAIN CLASSIFICATION</center></b></div>
                         <div class="card-body">
-                            <form action="UpdateMainController" method="get">
+                            <form name="editMainForm" id="editMainForm" action="UpdateMainController" method="POST" onsubmit="return validateForm()">
                                 <div class="form-row">
                                     <div class="form-group col-md-12">                       
                                         <Label for="txtMainId">ID</label>
@@ -106,7 +104,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <Label for="txtMainClass">Main Classification</label>
-                                        <input type ="text" name ="txtMainClass" class="form-control mb-3" value="<%= c.getMainClass()%>"/>
+                                        <input type ="text" name ="txtMainClass" id="txtMainClass" class="form-control mb-3" value="<%= c.getMainClass()%>"/>
                                     </div>
                                 </div>
                                 <button type ="Submit" class="btn btn-primary float-right">SUBMIT</button>                    
@@ -119,4 +117,15 @@
             </div>
         </div>
     </body>
+    <script>
+        function validateForm() {
+            var main = document.forms["editMainForm"]["txtMainClass"].value;
+            if (main == null || main == "") {
+                document.getElementById('txtMainClass').classList.add('is-invalid');
+                return false;
+            } else {
+                document.getElementById('txtMainClass').classList.remove('is-invalid');
+            }            
+        }
+    </script>
 </html>

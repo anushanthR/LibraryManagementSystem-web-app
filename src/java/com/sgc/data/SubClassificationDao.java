@@ -12,138 +12,181 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Anushanth
  */
 public class SubClassificationDao {
-    
-    Connection connection = DatabaseConnect.getConnection();
+
+    Connection connection;
     PreparedStatement statement;
-        
-    public void insertSub(Classification sub) throws SQLException{        
-        
-        String insertBook = "INSERT INTO sub (SCID,SCName,MCID) VALUES (?,?,?)";
-        statement = connection.prepareStatement(insertBook);
-        statement.setString(1,sub.getSubId());
-        statement.setString(2, sub.getSubClass());
-        statement.setString(3,sub.getMainId());
-        statement.executeUpdate();
-        
-        DatabaseConnect.disconnect();
-    }
+    final String scid ="SCID";
+    final String mcName = "MCName";
+    final String scName = "SCName";
+    final String mcid = "MCID";
     
-    public List<Classification> searchSub(String txtSearchSub) throws SQLException{
-        
-        List <Classification> result = new ArrayList<>();
-        
-        String showSQL = "SELECT * FROM sub s INNER JOIN main m ON s.MCID = m.MCID WHERE s.MCID LIKE ? OR SCName LIKE ? OR MCName LIKE ?";
-        
-        statement = connection.prepareStatement(showSQL);
-        statement.setString(1,txtSearchSub+"%");
-        statement.setString(2,txtSearchSub+"%");
-        statement.setString(3,txtSearchSub+"%");
+    public void insertSub(Classification sub) {
 
-        ResultSet rsShow =  statement.executeQuery();
-        
-        while(rsShow.next()){
-            Classification sub = new Classification();
-            sub.setSubId(rsShow.getString("SCID"));
-            sub.setMainClass(rsShow.getString("MCName"));
-            sub.setSubClass(rsShow.getString("SCName"));
+        try {
+            connection = DatabaseConnect.getConnection();
+            String insertSubSql = "INSERT INTO sub (SCID,SCName,MCID) VALUES (?,?,?)";
+            statement = connection.prepareStatement(insertSubSql);
+            statement.setString(1, sub.getSubId());
+            statement.setString(2, sub.getSubClass());
+            statement.setString(3, sub.getMainId());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(SubClassificationDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DatabaseConnect.disconnect();
+        }
+    }
+
+    public List<Classification> searchSub(String txtSearchSub) {
+        List<Classification> result = new ArrayList<>();
+        try {
+            connection = DatabaseConnect.getConnection();
+            String searchSubSql = "SELECT * FROM sub s INNER JOIN main m ON s.MCID = m.MCID WHERE s.MCID LIKE ? OR SCName LIKE ? OR MCName LIKE ?";
+
+            statement = connection.prepareStatement(searchSubSql);
+            statement.setString(1, txtSearchSub + "%");
+            statement.setString(2, txtSearchSub + "%");
+            statement.setString(3, txtSearchSub + "%");
+
+            ResultSet rsSearchSub = statement.executeQuery();
+
+            while (rsSearchSub.next()) {
+                Classification sub = new Classification();
+                sub.setSubId(rsSearchSub.getString(scid));
+                sub.setMainClass(rsSearchSub.getString(mcName));
+                sub.setSubClass(rsSearchSub.getString(scName));
+                result.add(sub);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubClassificationDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DatabaseConnect.disconnect();
+        }
+        return result;
+    }
+
+    public List<Classification> viewSub() {
+        List<Classification> result = new ArrayList<>();
+        try {
+            connection = DatabaseConnect.getConnection();
+            String getSubClassSql = "SELECT * FROM sub s INNER JOIN main m ON s.MCID=m.MCID";
+
+            statement = connection.prepareStatement(getSubClassSql);
+            ResultSet rsViewSub = statement.executeQuery();
+
+            while (rsViewSub.next()) {
+                Classification sub = new Classification();
+                sub.setSubId(rsViewSub.getString(scid));
+                sub.setSubClass(rsViewSub.getString(scName));
+                sub.setMainClass(rsViewSub.getString(mcName));
+                result.add(sub);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubClassificationDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DatabaseConnect.disconnect();
+        }
+        return result;
+    }
+
+    public String getSubId() {
+        String subId = null;
+        try {
+            connection = DatabaseConnect.getConnection();
+            String getSubIdSQL = "SELECT SCID FROM sub ORDER BY SCID";
             
-            result.add(sub);        
+            statement = connection.prepareStatement(getSubIdSQL);
+            ResultSet rsGetSubID = statement.executeQuery();
+
+            while (rsGetSubID.next()) {
+                subId = rsGetSubID.getString(scid);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubClassificationDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DatabaseConnect.disconnect();
         }
-        DatabaseConnect.disconnect();
-        return result;    
+        return subId;
     }
-    
-    public List<Classification> viewSub() throws SQLException{
-        
-        List <Classification> result = new ArrayList<>();
-                
-        String showSQL = "SELECT * FROM sub s INNER JOIN main m ON s.MCID=m.MCID";
-        
-        statement = connection.prepareStatement(showSQL);
-        ResultSet rsShow =  statement.executeQuery();
-        
-        while(rsShow.next()){
-            Classification sub = new Classification();
-            sub.setSubId(rsShow.getString("SCID"));
-            sub.setSubClass(rsShow.getString("SCName"));
-            sub.setMainClass(rsShow.getString("MCName"));
-            result.add(sub);        
+
+    public void deleteSub(String id) {
+
+        try {
+            connection = DatabaseConnect.getConnection();
+            String deleteSubSql = "DELETE FROM sub WHERE SCID = ?";
+            statement = connection.prepareStatement(deleteSubSql);
+            statement.setString(1,id);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(SubClassificationDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DatabaseConnect.disconnect();
         }
-        DatabaseConnect.disconnect();
-        return result;    
     }
-    
-    public String getSubId() throws SQLException{
-        
-        String showSQL = "SELECT SCID FROM sub ORDER BY SCID";
-        
-        statement = connection.prepareStatement(showSQL);
-        ResultSet rsShow =  statement.executeQuery();
-        String scid = null;
-        while(rsShow.next()){
-            scid = rsShow.getString("SCID");
-        }
-        DatabaseConnect.disconnect();
-        return scid;    
-    }
-    
-    public void deleteSub(String id) throws SQLException{
-        
-        String showSQL = "DELETE FROM sub WHERE SCID = ?";        
-        statement = connection.prepareStatement(showSQL);
-        statement.setString(1, id);
-        statement.executeUpdate();
-        DatabaseConnect.disconnect();
-    }
-    
-    public int countMain(String mcid) throws SQLException{
-        
-        String sql = "SELECT * FROM sub WHERE MCID = ?";        
-        statement = connection.prepareStatement(sql);
-        statement.setString(1, mcid);
-        ResultSet rsBook = statement.executeQuery();
+
+    public int countMain(String mcid) {
         int count = 0;
-        while(rsBook.next()){
-              count ++;          
+        try {
+            connection = DatabaseConnect.getConnection();
+            String countMainSql = "SELECT * FROM sub WHERE MCID = ?";
+            statement = connection.prepareStatement(countMainSql);
+            statement.setString(1, mcid);
+            ResultSet rsCountMain = statement.executeQuery();
+            while (rsCountMain.next()) {
+                count++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubClassificationDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DatabaseConnect.disconnect();
         }
-        DatabaseConnect.disconnect();
-        return count;    
+        return count;
     }
-    
-    public Classification populateSub(String subId) throws SQLException {
+
+    public Classification populateSub(String subId) {
         Classification sub = new Classification();
+        try {
+            connection = DatabaseConnect.getConnection();
+            String popSubSql = "SELECT * FROM sub WHERE SCID = ?";
+            statement = connection.prepareStatement(popSubSql);
+            statement.setString(1, subId);
+            ResultSet rsPopSub = statement.executeQuery();
 
-        String showSQL = "SELECT * FROM sub WHERE SCID = ?";
-
-        statement = connection.prepareStatement(showSQL);
-        statement.setString(1, subId);
-        ResultSet rsMain = statement.executeQuery();
-
-        while (rsMain.next()) {
-            sub.setSubId(rsMain.getString("SCID"));
-            sub.setMainId(rsMain.getString("MCID"));
-            sub.setSubClass(rsMain.getString("SCName"));
+            while (rsPopSub.next()) {
+                sub.setSubId(rsPopSub.getString(scid));
+                sub.setMainId(rsPopSub.getString(mcid));
+                sub.setSubClass(rsPopSub.getString(scName));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubClassificationDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DatabaseConnect.disconnect();
         }
-        DatabaseConnect.disconnect();
         return sub;
     }
-    
-    public void updateSub(Classification sub) throws SQLException{
-        
-        String insertBook = "UPDATE sub SET SCName = ? , MCID = ? WHERE SCID = ?";
-        statement = connection.prepareStatement(insertBook);
-        
-        statement.setString(1, sub.getSubClass());
-        statement.setString(2,sub.getMainId());
-        statement.setString(3,sub.getSubId());
-        statement.executeUpdate();
-        
-        DatabaseConnect.disconnect();
+
+    public void updateSub(Classification sub) {
+
+        try {
+            connection = DatabaseConnect.getConnection();
+            String updateSubSql = "UPDATE sub SET SCName = ? , MCID = ? WHERE SCID = ?";
+            statement = connection.prepareStatement(updateSubSql);
+            statement.setString(1, sub.getSubClass());
+            statement.setString(2, sub.getMainId());
+            statement.setString(3, sub.getSubId());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(SubClassificationDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DatabaseConnect.disconnect();
+        }
     }
 }

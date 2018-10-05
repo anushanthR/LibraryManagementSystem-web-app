@@ -34,7 +34,7 @@ public class AddBookController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BookController</title>");            
+            out.println("<title>Servlet BookController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet BookController at " + request.getContextPath() + "</h1>");
@@ -43,7 +43,6 @@ public class AddBookController extends HttpServlet {
         }
     }
 
-    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -56,28 +55,6 @@ public class AddBookController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        Book book = new Book();
-        BookDao bookDao = new BookDao();
-        book.setId(request.getParameter("txtBookId"));
-        book.setTitle(request.getParameter("txtTitle"));
-        book.setAuthor(request.getParameter("txtAuthor"));
-        book.setMain(request.getParameter("txtMain"));
-        book.setSub(request.getParameter("txtSub"));
-        book.setPublishedYear(request.getParameter("publishedYear"));
-        book.setPrintedYear(request.getParameter("printedYear"));
-        book.setIsbn(request.getParameter("txtIsbn"));
-        book.setPages(request.getParameter("txtPages"));
-        try {
-            bookDao.insertBookData(book);
-            String success = "Book "+book.getTitle()+" has added successfully";
-            request.setAttribute("Success", success);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("ViewBookController");
-            dispatcher.forward(request, response);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(AddBookController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
     }
 
     /**
@@ -91,7 +68,27 @@ public class AddBookController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Book book = new Book();
+        BookDao bookDao = new BookDao();
+        book.setId(request.getParameter("txtBookId"));
+        book.setTitle(request.getParameter("txtTitle"));
+        book.setAuthor(request.getParameter("txtAuthor"));
+        book.setMain(request.getParameter("txtMain"));
+        book.setSub(request.getParameter("txtSub"));
+        book.setPublishedYear(request.getParameter("publishedYear"));
+        book.setPrintedYear(request.getParameter("printedYear"));
+        book.setIsbn(request.getParameter("txtIsbn"));
+        book.setPages(request.getParameter("txtPages"));
+        try {
+            bookDao.insertBookData(book);
+            String success = "Book " + book.getTitle() + " has added successfully";
+            request.setAttribute("Success", success);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("ViewBookController");
+            dispatcher.forward(request, response);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AddBookController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

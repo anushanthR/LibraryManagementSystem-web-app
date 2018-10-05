@@ -10,12 +10,9 @@ import com.sgc.data.SubClassificationDao;
 import com.sgc.model.Classification;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -72,20 +69,16 @@ public class LoadSubController extends HttpServlet {
         List<Classification> result;
         SubClassificationDao subDao = new SubClassificationDao();
 
-        try {
-            result = subDao.searchSub(mcid);
-            Map<String, String> options = new LinkedHashMap<>();
-            for (int i = 0; i < result.size(); i++) {
-                Classification c = result.get(i);
-                options.put(c.getSubId(), c.getSubClass());
-            }
-            String json = new Gson().toJson(options);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
-        } catch (SQLException ex) {
-            Logger.getLogger(LoadMainController.class.getName()).log(Level.SEVERE, null, ex);
+        result = subDao.searchSub(mcid);
+        Map<String, String> options = new LinkedHashMap<>();
+        for (int i = 0; i < result.size(); i++) {
+            Classification c = result.get(i);
+            options.put(c.getSubId(), c.getSubClass());
         }
+        String json = new Gson().toJson(options);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);
 
     }
 

@@ -19,7 +19,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-        <script type="text/javascript" language="javascript" src="Content/bootstrap-4.1.3-dist/js/jquery.tablesorter.min.js"></script>
+        <script type="text/javascript" language="javascript" src="Content/js/jquery.tablesorter.min.js"></script>
         <style>
             td , th{
                 width: 10%;
@@ -60,7 +60,7 @@
 
     </head>
     <body>
-        <div class="container-fluid">
+        
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
                 <a class="navbar-brand" href="index.jsp"><img src="Content/ICONS/image.png" width="35" height="35"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,7 +95,7 @@
                     </ul>
                 </div>
             </nav>
-
+        <div class="container-fluid">
             <div class="container">
                 <div class="row">
                     <div class="col col-md-8 offset-2">
@@ -148,7 +148,7 @@
 
                                     <td style="width: 6%; align-content: center;"> 
                                         <div class="row">
-                                            <form action="PopulateUpdateSub" method="get">
+                                            <form action="PopulateUpdateSub" method="POST">
                                                 <button name="updateSub" id="editSub" class="btn btn-link new"  value="<%= s.getSubId()%>">
                                                     <i class="fas fa-edit"></i>
                                                 </button>

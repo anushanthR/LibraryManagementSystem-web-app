@@ -8,7 +8,6 @@ package com.sgc.controller;
 import com.sgc.data.BookDao;
 import com.sgc.model.Book;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -34,29 +33,9 @@ public class ViewBookController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
         String msg = null;
-        if(request.getAttribute("msg")!=null){
-            msg = (String)request.getAttribute("msg");
+        if (request.getAttribute("msg") != null) {
+            msg = (String) request.getAttribute("msg");
         }
         String txtSearchKey;
         List<Book> result;
@@ -76,6 +55,21 @@ public class ViewBookController extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(ViewBookController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
